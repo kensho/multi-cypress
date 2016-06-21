@@ -1,0 +1,69 @@
+{
+  "name": "multi-cypress",
+  "description": "Roll multiple spec bundles and test in parallel using Cypress and GitLab",
+  "version": "1.0.0",
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "bugs": "https://github.com/kensho/multi-cypress/issues",
+  "config": {
+    "pre-git": {
+      "commit-msg": "simple",
+      "pre-commit": [
+        "npm run deps",
+        "npm test",
+        "npm run ban"
+      ],
+      "pre-push": [
+        "npm run secure",
+        "npm run license",
+        "npm run ban -- --all",
+        "npm run size"
+      ],
+      "post-commit": [],
+      "post-merge": []
+    }
+  },
+  "files": [
+    "src/*.js",
+    "!src/*-spec.js"
+  ],
+  "homepage": "https://github.com/kensho/multi-cypress#readme",
+  "keywords": [
+    "build",
+    "cypress",
+    "gitlab",
+    "multiple",
+    "parallel",
+    "roll",
+    "spec"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kensho/multi-cypress.git"
+  },
+  "scripts": {
+    "ban": "ban",
+    "deps": "deps-ok",
+    "format": "standard-format -w src/*.js",
+    "issues": "git-issues",
+    "license": "license-checker --production --onlyunknown --csv",
+    "lint": "standard --verbose src/*.js",
+    "pretest": "npm run format && npm run lint",
+    "secure": "nsp check",
+    "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
+    "test": "npm run unit",
+    "unit": "mocha src/*-spec.js"
+  },
+  "devDependencies": {
+    "ban-sensitive-files": "1.8.3",
+    "deps-ok": "1.1.0",
+    "git-issues": "1.2.0",
+    "license-checker": "5.1.2",
+    "mocha": "2.5.3",
+    "nsp": "2.4.0",
+    "pre-git": "3.9.1",
+    "standard": "7.1.2",
+    "standard-format": "2.2.1"
+  }
+}
