@@ -5,9 +5,6 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const glob = require('glob')
 
-// const path = require('path')
-// const relative = path.join.bind(null, __dirname)
-
 function findFiles (pattern) {
   if (Array.isArray(pattern)) {
     debug('returning filenames', pattern)
@@ -22,18 +19,3 @@ function findFiles (pattern) {
 }
 
 module.exports = findFiles
-
-// function makeConfigs (specs) {
-//   const configs = specs.map((spec) => {
-//     const name = path.basename(spec)
-//     return {
-//       entry: `${spec}`,
-//       dest: `${destinationFolder}/${name}`,
-//       format: 'es6'
-//     }
-//   })
-//   return configs
-// }
-
-// const configs = makeConfigs(collectFiles())
-// module.exports = configs
