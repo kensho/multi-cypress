@@ -90,7 +90,7 @@ DEBUG=multi ...
 
 ### Small print
 
-Author: Kensho, Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2016
+Author: Kensho, Gleb Bahmutov &lt;gleb@kensho.com&gt; &copy; 2016
 
 License: MIT - do anything with the code, but don't blame me if it does not work.
 
