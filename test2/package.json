@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Using default multi-cypress config",
   "scripts": {
-    "test": "DEBUG=multi node ../src/build.js"
+    "test": "DEBUG=multi node ../src/build.js",
+    "watch": "DEBUG=multi node ../src/build.js -w"
   }
 }

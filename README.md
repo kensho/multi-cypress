@@ -32,6 +32,18 @@ and use it to build the spec bundles and `.gitlab-ci.yml` file.
 }
 ```
 
+You can watch the input spec files and keep rebuilding the bundles and `.gitlab-ci.yml`
+file on changes.
+
+```json
+{
+  "name": "my-module",
+  "scripts": {
+    "build": "multi-cypress -w"
+  }
+}
+```
+
 ### Custom configuration
 
 You can define input spec file pattern and output folder inside `package.json`,
@@ -44,6 +56,25 @@ see [test/package.json](test/package.json) for an example
     "multi-cypress": {
       "specs": "src/*-spec.js",
       "destination": "output"
+    }
+  }
+}
+```
+
+## Output .gitlab-ci.yml file
+
+The output file will have single build job and multiple test jobs (single test job per output spec
+file). See the generated test example [test/.gitlab-ci.yml](test/.gitlab-ci.yml).
+You can specify the base docker image to use (which should probably include everything
+Cypress needs to run).
+
+```json
+{
+  "name": "my-module",
+  "config": {
+    "multi-cypress": {
+      "specs": "src/*-spec.js",
+      "docker": "my-company-hub/test/cypress-base"
     }
   }
 }

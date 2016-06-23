@@ -1,7 +1,3 @@
-# TODO read the base Docker image from package.json config
-# using specific version of Cypress (via Docker image tag)
-image:
-
 # caching node_modules folder
 # https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/
 cache:
@@ -14,19 +10,3 @@ before_script:
 stages:
   - build
   - test
-
-build-specs:
-  stage: build
-  script:
-    - npm install
-    - npm test
-    - npm run build
-  artifacts:
-    paths:
-      - cypress/integration
-
-# Common build job definition using GitLab YAML features
-# http://docs.gitlab.com/ce/ci/yaml/README.html#special-yaml-features
-
-# we will generate the test definitions per spec bundle
-# using the common definition

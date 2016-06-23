@@ -50,7 +50,8 @@ const options = {
 const generateGitLabCiFile = require('./generate-gitlab-file')
 const generateGitLab = generateGitLabCiFile.bind(null,
   config.destination,
-  R.map(R.prop('dest'), configs)
+  R.map(R.prop('dest'), configs),
+  config.docker || config.image
 )
 
 function buildError (err) {

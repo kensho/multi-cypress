@@ -26,7 +26,9 @@
   },
   "files": [
     "src/*.js",
-    "!src/*-spec.js"
+    "!src/*-spec.js",
+    "test",
+    "test2"
   ],
   "bin": {
     "multi-cypress": "src/build.js"

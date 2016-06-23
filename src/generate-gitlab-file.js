@@ -10,21 +10,53 @@ const inCurrent = path.join.bind(null, process.cwd())
 const fs = require('fs')
 
 // expect common output folder
-function generateGitLabCiFile (outputFolder, specFiles) {
+function generateGitLabCiFile (outputFolder, specFiles, dockerImage) {
+  debug(`generating gitlab file for folder "${outputFolder}"`)
+  la(is.maybe.unemptyString(dockerImage),
+    'docker image should be just string', dockerImage)
+  if (dockerImage) {
+    debug(`based on docker image ${dockerImage}`)
+  }
+
   la(is.arrayOfStrings(specFiles), 'expected list of specs', specFiles)
   const names = specFiles.map((full) => path.basename(full, '.js'))
   debug('project names', names)
 
   const templateName = relative('./gitlab-ci-template.yml')
   const start = fs.readFileSync(templateName, 'utf8')
-  var gitlabFile = '# this is a generated file\n' + start
+  var gitlabFile = '# this is a generated file\n'
+  if (dockerImage) {
+    gitlabFile += `image: ${dockerImage}
+`
+  }
+  gitlabFile += start
 
-  gitlabFile += `
-  # Hidden job that defines an anchor named 'e2e_test_definition'
-  # This job will be automatically assigned "test" phase
-  .job_template: &e2e_test_definition
-    script:
-      - cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"
+  gitlabFile +=
+    `
+build-specs:
+  stage: build
+  script:
+    - npm install
+    - npm test
+    - npm run build
+  artifacts:
+    paths:
+      - ${outputFolder}
+
+# Common build job definition using GitLab YAML features
+# http://docs.gitlab.com/ce/ci/yaml/README.html#special-yaml-features
+
+# we will generate the test definitions per spec bundle
+# using the common definition
+`
+
+  gitlabFile +=
+    `
+# Hidden job that defines an anchor named 'e2e_test_definition'
+# This job will be automatically assigned "test" phase
+.job_template: &e2e_test_definition
+  script:
+    - cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"
 `
 
   names.forEach((name) => {
