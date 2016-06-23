@@ -46,8 +46,8 @@ file on changes.
 
 ### Custom configuration
 
-You can define input spec file pattern and output folder inside `package.json`,
-see [test/package.json](test/package.json) for an example
+You can define input spec file pattern and output folder inside `package.json`.
+See [test/package.json](test/package.json) for an example
 
 ```json
 {

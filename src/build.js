@@ -21,13 +21,7 @@ if (!config) {
 debug('multi-cypress config', config)
 
 const findSpecs = require('./find-specs')
-function getSpecProperty (config) {
-  return config.specs ||
-  config.spec ||
-  config.src ||
-  config.tests
-}
-const inputFiles = findSpecs(getSpecProperty(config))
+const inputFiles = findSpecs(config.specs)
 debug('input spec files')
 debug(inputFiles)
 
