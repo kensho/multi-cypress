@@ -1,3 +1,4 @@
+# this is a generated file
 # TODO read the base Docker image from package.json config
 # using specific version of Cypress (via Docker image tag)
 image:
@@ -30,3 +31,16 @@ build-specs:
 
 # we will generate the test definitions per spec bundle
 # using the common definition
+
+  # Hidden job that defines an anchor named 'e2e_test_definition'
+  # This job will be automatically assigned "test" phase
+  .job_template: &e2e_test_definition
+    script:
+      - cypress ci --spec "output/$CI_BUILD_NAME.js"
+
+one-spec:
+  <<: *e2e_test_definition
+    
+two-spec:
+  <<: *e2e_test_definition
+    

@@ -7,12 +7,6 @@ const glob = require('glob')
 
 // const path = require('path')
 // const relative = path.join.bind(null, __dirname)
-// const fs = require('fs-extra-promise').usePromise(require('bluebird'))
-
-// const sourceFolder = relative('./src')
-// const destinationFolder = relative('./cypress/integration')
-
-// fs.removeSync(destinationFolder)
 
 function findFiles (pattern) {
   if (Array.isArray(pattern)) {
@@ -22,7 +16,6 @@ function findFiles (pattern) {
   la(is.unemptyString(pattern), 'expected pattern string', pattern)
 
   debug('collecting source files using pattern', pattern)
-  // const specs = glob.sync(`${sourceFolder}/**/*-spec.js`)
   const specs = glob.sync(pattern)
   debug('found %d spec files', specs.length)
   return specs

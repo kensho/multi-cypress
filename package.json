@@ -8,8 +8,10 @@
     "pre-git": {
       "commit-msg": "simple",
       "pre-commit": [
+        "npm prune",
         "npm run deps",
         "npm test",
+        "npm run e2e",
         "npm run ban"
       ],
       "pre-push": [
@@ -53,7 +55,10 @@
     "secure": "nsp check",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "test": "npm run unit",
-    "unit": "mocha src/*-spec.js"
+    "unit": "mocha src/*-spec.js",
+    "e2e": "npm run e2e-with-config && npm run e2e-with-default-config",
+    "e2e-with-config": "cd test; npm test",
+    "e2e-with-default-config": "cd test2; npm test"
   },
   "devDependencies": {
     "ban-sensitive-files": "1.8.3",
@@ -68,6 +73,10 @@
   },
   "dependencies": {
     "check-more-types": "2.21.0",
-    "lazy-ass": "1.4.0"
+    "lazy-ass": "1.4.0",
+    "bluebird": "3.4.1",
+    "fs-extra-promise": "0.4.0",
+    "ramda": "0.21.0",
+    "rollem": "1.2.0"
   }
 }

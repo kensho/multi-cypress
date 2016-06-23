@@ -1,14 +1,16 @@
 'use strict'
 
 const debug = require('debug')('multi')
-// const path = require('path')
-// const relative = path.join.bind(null, __dirname)
-// const inCurrent = path.join.bind(null, process.cwd())
-// const configs = require('./find-specs')
-// const rollem = require('rollem')
-// const R = require('ramda')
+const la = require('lazy-ass')
+const is = require('check-more-types')
+const rollem = require('rollem')
+const R = require('ramda')
 
-const config = require('./get-my-config')('multi-cypress')
+const defaultConfig = {
+  specs: 'src/*-spec.js',
+  destination: 'cypress/integration'
+}
+const config = require('./get-my-config')('multi-cypress', defaultConfig)
 if (!config) {
   console.error('Cannot find package.json > config > multi-cypress object')
   process.exit(1)
@@ -16,40 +18,56 @@ if (!config) {
 debug('multi-cypress config', config)
 
 const findSpecs = require('./find-specs')
-const inputFiles = findSpecs(config.specs)
+const inputFiles = findSpecs(config.specs || config.spec || config.src)
 debug('input spec files')
 debug(inputFiles)
 
-// function isWatchArgument (arg) {
-//   return arg === '-w' || arg === '--watch'
-// }
-// const options = {
-//   watch: process.argv.some(isWatchArgument)
-// }
+function cleanOutputFolder (folder) {
+  la(is.unemptyString(folder), 'missing folder name', folder)
+  const fs = require('fs-extra-promise').usePromise(require('bluebird'))
+  debug(`deleting output folder ${folder}`)
+  fs.removeSync(folder)
+}
+cleanOutputFolder(config.destination)
 
-// const generateGitLabCiFile = require('./generate-gitlab-file')
+const makeConfigs = require('./make-configs')
+const configs = makeConfigs(config.destination, inputFiles)
+debug(`made ${configs.length} configs from specs`)
 
-// function buildError (err) {
-//   console.error('Could not build everything')
-//   if (err.message) {
-//     console.error(err.message)
-//   }
-//   if (err.stack) {
-//     console.error(err.stack)
-//   }
-// }
+function isWatchArgument (arg) {
+  return arg === '-w' || arg === '--watch'
+}
+const options = {
+  watch: process.argv.some(isWatchArgument)
+}
 
-// function exit () {
-//   process.exit(1)
-// }
+const generateGitLabCiFile = require('./generate-gitlab-file')
+const generateGitLab = generateGitLabCiFile.bind(null,
+  config.destination,
+  R.map(R.prop('dest'), configs)
+)
 
-// if (options.watch) {
-//   rollem(configs, options)
-//     .then((roller) => {
-//       roller.on('rolled', generateGitLabCiFile)
-//     })
-// } else {
-//   rollem(configs, options)
-//     .then(generateGitLabCiFile)
-//     .catch(R.pipe(buildError, exit))
-// }
+function buildError (err) {
+  console.error('Could not build everything')
+  if (err.message) {
+    console.error(err.message)
+  }
+  if (err.stack) {
+    console.error(err.stack)
+  }
+}
+
+function exit () {
+  process.exit(1)
+}
+
+if (options.watch) {
+  rollem(configs, options)
+    .then((roller) => {
+      roller.on('rolled', generateGitLab)
+    })
+} else {
+  rollem(configs, options)
+    .then(generateGitLab)
+    .catch(R.pipe(buildError, exit))
+}
