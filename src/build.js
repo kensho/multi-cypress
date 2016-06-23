@@ -10,7 +10,8 @@ const R = require('ramda')
 
 const defaultConfig = {
   specs: 'src/*-spec.js',
-  destination: 'cypress/integration'
+  destination: 'cypress/integration',
+  gitlab: true
 }
 const config = require('./get-my-config')('multi-cypress', defaultConfig)
 if (!config) {
@@ -55,6 +56,7 @@ const generateGitLab = generateGitLabCiFile.bind(null,
   R.map(R.prop('dest'), configs),
   config.docker || config.image
 )
+const writeGitLabFile = config.gitlab ? generateGitLab : R.I
 
 function buildError (err) {
   console.error('Could not build everything')
@@ -73,10 +75,10 @@ function exit () {
 if (options.watch) {
   rollem(configs, options)
     .then((roller) => {
-      roller.on('rolled', generateGitLab)
+      roller.on('rolled', writeGitLabFile)
     })
 } else {
   rollem(configs, options)
-    .then(generateGitLab)
+    .then(writeGitLabFile)
     .catch(R.pipe(buildError, exit))
 }

@@ -80,6 +80,19 @@ Cypress needs to run).
 }
 ```
 
+You can disable `.gitlab-ci.yml` file generation using a config option
+
+```json
+{
+  "name": "my-module",
+  "config": {
+    "multi-cypress": {
+      "gitlab": false
+    }
+  }
+}
+```
+
 ## Debugging
 
 To print debug messages during the build, start the tool with environment variable
