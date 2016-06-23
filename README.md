@@ -8,6 +8,47 @@
 [![semantic-release][semantic-image] ][semantic-url]
 [![js-standard-style][standard-image]][standard-url]
 
+## Goals
+
+This is a built utility for making and running [Cypress](https://www.cypress.io/)
+tests on a GitLab instance.
+
+* Generate single output spec files from multiple input files using ES6 module syntax 
+  (`import` and `export` statements)
+* Create a GitLab definition file that allows running multiple spec files in parallel.
+
+## Install and use
+
+Imagine you have multiple spec files in `tests` folder. Each spec file can include
+other files using `import` statements. Install this tool `npm i -D multi-cypress`
+and use it to build the spec bundles and `.gitlab-ci.yml` file.
+
+```json
+{
+  "name": "my-module",
+  "scripts": {
+    "build": "multi-cypress"
+  }
+}
+```
+
+### Custom configuration
+
+You can define input spec file pattern and output folder inside `package.json`,
+see [test/package.json](test/package.json) for an example
+
+```json
+{
+  "name": "my-module",
+  "config": {
+    "multi-cypress": {
+      "specs": "src/*-spec.js",
+      "destination": "output"
+    }
+  }
+}
+```
+
 ## Debugging
 
 To print debug messages during the build, start the tool with environment variable
