@@ -62,9 +62,10 @@
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "test": "npm run unit",
     "unit": "mocha src/*-spec.js",
-    "e2e": "npm run e2e-with-config && npm run e2e-with-default-config",
+    "e2e": "npm run e2e-with-config && npm run e2e-with-default-config && npm run e2e-no-gitlab",
     "e2e-with-config": "cd test; npm test",
     "e2e-with-default-config": "cd test2; npm test",
+    "e2e-no-gitlab": "cd test3; npm test",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "devDependencies": {
