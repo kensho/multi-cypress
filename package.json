@@ -80,10 +80,11 @@
     "standard-format": "2.2.1"
   },
   "dependencies": {
-    "check-more-types": "2.21.0",
-    "lazy-ass": "1.4.0",
     "bluebird": "3.4.1",
+    "check-more-types": "2.21.0",
+    "debug": "2.2.0",
     "fs-extra-promise": "0.4.0",
+    "lazy-ass": "1.4.0",
     "ramda": "0.21.0",
     "rollem": "1.2.0"
   },
@@ -91,7 +92,7 @@
     "verifyConditions": {
       "path": "condition-node-version",
       "node": "4",
-      "verbose": true
+      "verbose": false
     }
   }
 }
