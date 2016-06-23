@@ -1,10 +1,19 @@
 'use strict'
 
-const path = require('path')
-const relative = path.join.bind(null, __dirname)
-const configs = require(relative('./rollem.config.js'))
+const debug = require('debug')('multi')
+// const path = require('path')
+// const relative = path.join.bind(null, __dirname)
+// const inCurrent = path.join.bind(null, process.cwd())
+const configs = require('./find-specs')
 const rollem = require('rollem')
 const R = require('ramda')
+
+const config = require('./get-my-config')('multi-cypress')
+if (!config) {
+  console.error('Cannot find package.json > config > multi-cypress object')
+  process.exti(1)
+}
+debug('multi-cypress config', config)
 
 function isWatchArgument (arg) {
   return arg === '-w' || arg === '--watch'

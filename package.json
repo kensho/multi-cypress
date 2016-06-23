@@ -65,5 +65,9 @@
     "pre-git": "3.9.1",
     "standard": "7.1.2",
     "standard-format": "2.2.1"
+  },
+  "dependencies": {
+    "check-more-types": "2.21.0",
+    "lazy-ass": "1.4.0"
   }
 }

@@ -8,6 +8,14 @@
 [![semantic-release][semantic-image] ][semantic-url]
 [![js-standard-style][standard-image]][standard-url]
 
+## Debugging
+
+To print debug messages during the build, start the tool with environment variable
+
+```
+DEBUG=multi ...
+```
+
 ### Small print
 
 Author: Kensho, Gleb Bahmutov &lt;gleb.bahmutov@gmail.com&gt; &copy; 2016
