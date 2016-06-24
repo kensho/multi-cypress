@@ -17,6 +17,12 @@ tests on a GitLab instance.
   (`import` and `export` statements)
 * Create a GitLab definition file that allows running multiple spec files in parallel.
 
+You can see an example in action at 
+[gitlab](https://gitlab.com/bahmutov/cypress-example-kitchensink) where multiple testing
+jobs are built and executed in parallel.
+
+![example pipeline](example-pipeline.png)
+
 ## Install and use
 
 Imagine you have multiple spec files in `tests` folder. Each spec file can include

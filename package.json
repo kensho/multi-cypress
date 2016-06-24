@@ -30,7 +30,8 @@
     "!src/*-spec.js",
     "test",
     "test2",
-    "test3"
+    "test3",
+    "*.png"
   ],
   "bin": {
     "multi-cypress": "src/build.js"
