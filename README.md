@@ -66,7 +66,9 @@ See [test/package.json](test/package.json) for an example
 The output file will have single build job and multiple test jobs (single test job per output spec
 file). See the generated test example [test/.gitlab-ci.yml](test/.gitlab-ci.yml).
 You can specify the base docker image to use (which should probably include everything
-Cypress needs to run).
+Cypress needs to run). By default, it sets the base image to 
+[bahmutov/cypress-image](https://hub.docker.com/r/bahmutov/cypress-image/) which includes
+everything Cypress needs to run plus Node 6.
 
 ```json
 {

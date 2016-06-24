@@ -11,7 +11,8 @@ const R = require('ramda')
 const defaultConfig = {
   specs: 'src/*-spec.js',
   destination: 'cypress/integration',
-  gitlab: true
+  gitlab: true,
+  docker: 'bahmutov/cypress-image'
 }
 const config = require('./get-my-config')('multi-cypress', defaultConfig)
 if (!config) {
