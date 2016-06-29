@@ -11,24 +11,32 @@ const fs = require('fs')
 
 // expect common output folder
 function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
-  testCommands) {
+  script, afterScript) {
   debug(`generating gitlab file for folder "${outputFolder}"`)
   la(is.maybe.unemptyString(dockerImage),
     'docker image should be just string', dockerImage)
   if (dockerImage) {
     debug(`based on docker image ${dockerImage}`)
   }
-  la(is.maybe.arrayOfStrings(testCommands),
-    'expected test commands', testCommands)
+  la(is.maybe.arrayOfStrings(script), 'expected test commands', script)
 
   const defaultTestCommands = [
     `cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"`
   ]
-  if (!testCommands) {
-    testCommands = defaultTestCommands
+  if (!script) {
+    script = defaultTestCommands
   }
   debug('test commands')
-  debug(testCommands)
+  debug(script)
+
+  const defaultAfterScriptCommands = []
+  if (!afterScript) {
+    afterScript = defaultAfterScriptCommands
+  }
+  if (is.not.empty(afterScript)) {
+    debug('after script commands')
+    debug(afterScript)
+  }
 
   la(is.arrayOfStrings(specFiles), 'expected list of specs', specFiles)
   const names = specFiles.map((full) => path.basename(full, '.js'))
@@ -69,10 +77,17 @@ build-specs:
 .job_template: &e2e_test_definition
   script:
 `
-  testCommands.forEach((testCommand) => {
+  script.forEach((testCommand) => {
     gitlabFile += `    - ${testCommand}
 `
   })
+  if (is.not.empty(afterScript)) {
+    gitlabFile += '  after_script:\n'
+    afterScript.forEach((testCommand) => {
+      gitlabFile += `    - ${testCommand}
+`
+    })
+  }
 
   names.forEach((name) => {
     gitlabFile += `

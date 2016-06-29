@@ -10,8 +10,10 @@
     "multi-cypress": {
       "gitlab": true,
       "destination": "cypress/integration",
-      "testCommands": [
-        "cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json",
+      "script": [
+        "cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json"
+      ],
+      "after_script": [
         "echo All done!"
       ]
     }

@@ -111,15 +111,18 @@ cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"
 
 where `outputFolder` is either the default folder or the one specified in the `package.json`,
 and `CI_BUILD_NAME` is the environment variable set by the GitLab CI. You can set your own
-test command(s), for example to specify the 
+test and after test commands, for example to specify the 
 [json reporter](https://github.com/cypress-io/cypress-cli#cypress-run-1) we could do
 
 ```json
 "config": {
   "multi-cypress": {
     "destination": "cypress/integration",
-    "testCommands": [
+    "script": [
       "cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json",
+      "echo test finished successfully"
+    ]
+    "after_script": [
       "echo All done!"
     ]
   }

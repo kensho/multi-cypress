@@ -50,7 +50,8 @@ const generateGitLab = generateGitLabCiFile.bind(null,
   config.destination,
   R.map(R.prop('dest'), configs),
   config.docker || config.image,
-  config.testCommands
+  config.script,
+  config.after_script
 )
 const writeGitLabFile = config.gitlab ? generateGitLab : R.I
 
