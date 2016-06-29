@@ -10,13 +10,25 @@ const inCurrent = path.join.bind(null, process.cwd())
 const fs = require('fs')
 
 // expect common output folder
-function generateGitLabCiFile (outputFolder, specFiles, dockerImage) {
+function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
+  testCommands) {
   debug(`generating gitlab file for folder "${outputFolder}"`)
   la(is.maybe.unemptyString(dockerImage),
     'docker image should be just string', dockerImage)
   if (dockerImage) {
     debug(`based on docker image ${dockerImage}`)
   }
+  la(is.maybe.arrayOfStrings(testCommands),
+    'expected test commands', testCommands)
+
+  const defaultTestCommands = [
+    `cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"`
+  ]
+  if (!testCommands) {
+    testCommands = defaultTestCommands
+  }
+  debug('test commands')
+  debug(testCommands)
 
   la(is.arrayOfStrings(specFiles), 'expected list of specs', specFiles)
   const names = specFiles.map((full) => path.basename(full, '.js'))
@@ -56,8 +68,11 @@ build-specs:
 # This job will be automatically assigned "test" phase
 .job_template: &e2e_test_definition
   script:
-    - cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"
 `
+  testCommands.forEach((testCommand) => {
+    gitlabFile += `    - ${testCommand}
+`
+  })
 
   names.forEach((name) => {
     gitlabFile += `

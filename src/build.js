@@ -49,7 +49,8 @@ const generateGitLabCiFile = require('./generate-gitlab-file')
 const generateGitLab = generateGitLabCiFile.bind(null,
   config.destination,
   R.map(R.prop('dest'), configs),
-  config.docker || config.image
+  config.docker || config.image,
+  config.testCommands
 )
 const writeGitLabFile = config.gitlab ? generateGitLab : R.I
 
