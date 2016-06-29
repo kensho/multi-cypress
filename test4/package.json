@@ -1,0 +1,19 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "Not writing gitlab file",
+  "scripts": {
+    "test": "DEBUG=multi node ../src/build.js",
+    "watch": "DEBUG=multi node ../src/build.js -w"
+  },
+  "config": {
+    "multi-cypress": {
+      "gitlab": true,
+      "destination": "cypress/integration",
+      "testCommands": [
+        "cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json",
+        "echo All done!"
+      ]
+    }
+  }
+}

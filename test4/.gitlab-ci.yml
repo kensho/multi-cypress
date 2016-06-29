@@ -1,0 +1,44 @@
+# this is a generated file
+image: bahmutov/cypress-image
+# caching node_modules folder
+# https://about.gitlab.com/2016/03/01/gitlab-runner-with-docker/
+cache:
+  paths:
+  - node_modules/
+
+before_script:
+  - cypress verify
+
+stages:
+  - build
+  - test
+
+build-specs:
+  stage: build
+  script:
+    - npm install
+    - npm test
+    - npm run build
+  artifacts:
+    paths:
+      - cypress/integration
+
+# Common build job definition using GitLab YAML features
+# http://docs.gitlab.com/ce/ci/yaml/README.html#special-yaml-features
+
+# we will generate the test definitions per spec bundle
+# using the common definition
+
+# Hidden job that defines an anchor named 'e2e_test_definition'
+# This job will be automatically assigned "test" phase
+.job_template: &e2e_test_definition
+  script:
+    - cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json
+    - echo All done!
+
+one-spec:
+  <<: *e2e_test_definition
+    
+two-spec:
+  <<: *e2e_test_definition
+    

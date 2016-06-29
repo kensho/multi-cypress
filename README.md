@@ -101,6 +101,35 @@ You can disable `.gitlab-ci.yml` file generation using a config option
 }
 ```
 
+## Custom test commands
+
+By default, each GitLab test job only runs a single default command
+
+```
+cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"
+```
+
+where `outputFolder` is either the default folder or the one specified in the `package.json`,
+and `CI_BUILD_NAME` is the environment variable set by the GitLab CI. You can set your own
+test command(s), for example to specify the 
+[json reporter](https://github.com/cypress-io/cypress-cli#cypress-run-1) we could do
+
+```json
+"config": {
+  "multi-cypress": {
+    "destination": "cypress/integration",
+    "testCommands": [
+      "cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json",
+      "echo All done!"
+    ]
+  }
+}
+```
+
+Note that in this case you need to form the full test filename yourself, without relying on
+macro expansion `${outputFolder}`. See [test4/package.json](test4/package.json) and
+[test4/.gitlab-ci.yml](test4/.gitlab-ci.yml) for examples.
+
 ## Debugging
 
 To print debug messages during the build, start the tool with environment variable

@@ -12,6 +12,7 @@
         "npm run deps",
         "npm test",
         "npm run e2e",
+        "npm run e2e-custom-test-commands",
         "npm run ban"
       ],
       "pre-push": [
@@ -68,6 +69,7 @@
     "e2e-with-config": "cd test; npm test",
     "e2e-with-default-config": "cd test2; npm test",
     "e2e-no-gitlab": "cd test3; npm test",
+    "e2e-custom-test-commands": "cd test4; npm test",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "devDependencies": {
