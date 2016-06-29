@@ -56,7 +56,7 @@ function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
 build-specs:
   stage: build
   script:
-    - npm install
+    - npm install --quiet
     - npm test
     - npm run build
   artifacts:
