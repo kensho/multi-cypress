@@ -53,14 +53,19 @@ function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
 
   gitlabFile +=
     `
+# save current build job id to kind of tie together multiple test jobs
+# because GitLab CI api does not expose the pipeline ID
+# pass the saved id through the file
 build-specs:
   stage: build
   script:
+    - echo $CI_BUILD_ID > build.id
     - npm install --quiet
     - npm test
     - npm run build
   artifacts:
     paths:
+      - build.id
       - ${outputFolder}
 
 # Common build job definition using GitLab YAML features
