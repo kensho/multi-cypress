@@ -141,6 +141,22 @@ To print debug messages during the build, start the tool with environment variab
 DEBUG=multi ...
 ```
 
+The generated GitLab CI also collects the screenshots collected by Cypress as artifacts
+
+```
+.job_template: &e2e_test_definition
+  artifacts:
+    when: on_failure
+    expire_in: 1 month
+    paths:
+    - cypress/screenshots/
+  script:
+    - cypress ci --spec "output/$CI_BUILD_NAME.js"
+```
+
+This should help debug test problems, because Cypress should save the screenshots on failure
+when running in the CI mode.
+
 ### Small print
 
 Author: Kensho, Gleb Bahmutov &lt;gleb@kensho.com&gt; &copy; 2016

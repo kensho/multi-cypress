@@ -37,6 +37,11 @@ build-specs:
 # Hidden job that defines an anchor named 'e2e_test_definition'
 # This job will be automatically assigned "test" phase
 .job_template: &e2e_test_definition
+  artifacts:
+    when: on_failure
+    expire_in: 1 month
+    paths:
+    - cypress/screenshots/
   script:
     - cypress ci --spec "cypress/integration/$CI_BUILD_NAME.js"
 
