@@ -11,7 +11,7 @@ const fs = require('fs')
 
 // expect common output folder
 function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
-  script, afterScript) {
+  script, beforeScript, afterScript) {
   debug(`generating gitlab file for folder "${outputFolder}"`)
   la(is.maybe.unemptyString(dockerImage),
     'docker image should be just string', dockerImage)
@@ -28,6 +28,15 @@ function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
   }
   debug('test commands')
   debug(script)
+
+  const defaultBeforeScriptCommands = []
+  if (!beforeScript) {
+    beforeScript = defaultBeforeScriptCommands
+  }
+  if (is.not.empty(beforeScript)) {
+    debug('before script commands')
+    debug(beforeScript)
+  }
 
   const defaultAfterScriptCommands = []
   if (!afterScript) {
@@ -91,6 +100,13 @@ build-specs:
     gitlabFile += `    - ${testCommand}
 `
   })
+  if (is.not.empty(beforeScript)) {
+    gitlabFile += '  before_script:\n'
+    beforeScript.forEach((testCommand) => {
+      gitlabFile += `    - ${testCommand}
+`
+    })
+  }
   if (is.not.empty(afterScript)) {
     gitlabFile += '  after_script:\n'
     afterScript.forEach((testCommand) => {
