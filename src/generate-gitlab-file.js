@@ -84,7 +84,7 @@ build-specs:
     when: on_failure
     expire_in: 1 month
     paths:
-    - cypress/screenshots/
+    - cypress/screenshots
   script:
 `
   script.forEach((testCommand) => {
