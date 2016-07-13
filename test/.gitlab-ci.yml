@@ -41,7 +41,7 @@ build-specs:
     when: on_failure
     expire_in: 1 month
     paths:
-    - cypress/screenshots
+    - cypress/screenshots/
   script:
     - cypress ci --spec "output/$CI_BUILD_NAME.js"
 
