@@ -27,6 +27,7 @@ build-specs:
     paths:
       - build.id
       - cypress/support
+      - cypress/fixtures
       - cypress/integration
 
 # Common build job definition using GitLab YAML features

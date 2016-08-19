@@ -76,6 +76,7 @@ build-specs:
     paths:
       - build.id
       - cypress/support
+      - cypress/fixtures
       - ${outputFolder}
 
 # Common build job definition using GitLab YAML features
