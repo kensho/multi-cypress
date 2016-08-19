@@ -26,6 +26,7 @@ build-specs:
   artifacts:
     paths:
       - build.id
+      - cypress/support
       - output
 
 # Common build job definition using GitLab YAML features
