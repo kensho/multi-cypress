@@ -37,6 +37,9 @@ cleanOutputFolder(config.destination)
 const makeConfigs = require('./make-configs')
 const configs = makeConfigs(config.destination, inputFiles)
 debug(`made ${configs.length} configs from specs`)
+if (configs.length) {
+  debug('first config', configs[0])
+}
 
 function isWatchArgument (arg) {
   return arg === '-w' || arg === '--watch'

@@ -13,11 +13,11 @@
 This is a built utility for making and running [Cypress](https://www.cypress.io/)
 tests on a GitLab instance.
 
-* Generate single output spec files from multiple input files using ES6 module syntax 
+* Generate single output spec files from multiple input files using ES6 module syntax
   (`import` and `export` statements)
 * Create a GitLab definition file that allows running multiple spec files in parallel.
 
-You can see an example in action at 
+You can see an example in action at
 [gitlab](https://gitlab.com/bahmutov/cypress-example-kitchensink) where multiple testing
 jobs are built and executed in parallel.
 
@@ -72,7 +72,7 @@ See [test/package.json](test/package.json) for an example
 The output file will have single build job and multiple test jobs (single test job per output spec
 file). See the generated test example [test/.gitlab-ci.yml](test/.gitlab-ci.yml).
 You can specify the base docker image to use (which should probably include everything
-Cypress needs to run). By default, it sets the base image to 
+Cypress needs to run). By default, it sets the base image to
 [bahmutov/cypress-image](https://hub.docker.com/r/bahmutov/cypress-image/) which includes
 everything Cypress needs to run plus Node 6.
 
@@ -111,7 +111,7 @@ cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"
 
 where `outputFolder` is either the default folder or the one specified in the `package.json`,
 and `CI_BUILD_NAME` is the environment variable set by the GitLab CI. You can set your own
-test, before and after commands, for example to specify the 
+test, before and after commands, for example to specify the
 [json reporter](https://github.com/cypress-io/cypress-cli#cypress-run-1) we could do
 
 ```json
@@ -160,6 +160,12 @@ The generated GitLab CI also collects the screenshots collected by Cypress as ar
 
 This should help debug test problems, because Cypress should save the screenshots on failure
 when running in the CI mode.
+
+## Misc
+
+The rollup config includes
+[rollup-plugin-node-resolve](https://github.com/rollup/rollup-plugin-node-resolve#readme)
+plugin by default to allow importing ES6 modules.
 
 ### Small print
 

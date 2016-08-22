@@ -93,7 +93,8 @@
     "glob": "7.0.5",
     "lazy-ass": "1.5.0",
     "ramda": "0.21.0",
-    "rollem": "1.5.0"
+    "rollem": "1.5.0",
+    "rollup-plugin-node-resolve": "2.0.0"
   },
   "release": {
     "verifyConditions": {

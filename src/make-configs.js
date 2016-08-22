@@ -3,6 +3,7 @@
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const path = require('path')
+const nodeResolve = require('rollup-plugin-node-resolve')
 
 function makeConfigs (destinationFolder, specs) {
   la(is.unemptyString(destinationFolder), 'missing destination', destinationFolder)
@@ -13,7 +14,8 @@ function makeConfigs (destinationFolder, specs) {
     return {
       entry: `${spec}`,
       dest: `${destinationFolder}/${name}`,
-      format: 'es6'
+      format: 'es6',
+      plugins: [nodeResolve()]
     }
   })
   return configs
