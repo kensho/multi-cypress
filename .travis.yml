@@ -14,6 +14,8 @@ script:
   - npm test
   - npm run e2e
 after_success:
+  # stop build if there are changed files
+  - $(npm bin)/stop-build
   - npm run semantic-release
 branches:
   except:
