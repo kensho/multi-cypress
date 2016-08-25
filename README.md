@@ -137,6 +137,12 @@ Note that in this case you need to form the full test filename yourself, without
 macro expansion `${outputFolder}`. See [test4/package.json](test4/package.json) and
 [test4/.gitlab-ci.yml](test4/.gitlab-ci.yml) for examples.
 
+## Custom build command
+
+You can also customize the build script commands using `build_script` list.
+See [test5/package.json](test5/package.json) and the output
+[test5/.gitlab-ci.yml](test5/.gitlab-ci.yml) files.
+
 ## Debugging
 
 To print debug messages during the build, start the tool with environment variable

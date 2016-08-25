@@ -19,10 +19,8 @@ stages:
 build-specs:
   stage: build
   script:
-    - echo $CI_BUILD_ID > build.id
-    - npm install --quiet
-    - npm test
-    - npm run build
+    - echo building stuff
+    - npm run my-build-command
 
   artifacts:
     paths:
@@ -46,11 +44,7 @@ build-specs:
     paths:
       - cypress/screenshots/
   script:
-    - cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json
-  before_script:
-    - echo Done with before script!
-  after_script:
-    - echo All done!
+    - cypress ci --spec cypress/integration/$CI_BUILD_NAME.js
 
 one-spec:
   <<: *e2e_test_definition

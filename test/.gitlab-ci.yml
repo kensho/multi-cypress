@@ -23,6 +23,7 @@ build-specs:
     - npm install --quiet
     - npm test
     - npm run build
+
   artifacts:
     paths:
       - build.id

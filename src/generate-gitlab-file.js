@@ -11,7 +11,8 @@ const fs = require('fs')
 
 // expect common output folder
 function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
-  script, beforeScript, afterScript) {
+  script, beforeScript, afterScript,
+  buildScript) {
   debug(`generating gitlab file for folder "${outputFolder}"`)
   la(is.maybe.unemptyString(dockerImage),
     'docker image should be just string', dockerImage)
@@ -19,6 +20,16 @@ function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
     debug(`based on docker image ${dockerImage}`)
   }
   la(is.maybe.arrayOfStrings(script), 'expected test commands', script)
+
+  const defaultBuildCommands = [
+    'echo $CI_BUILD_ID > build.id',
+    'npm install --quiet',
+    'npm test',
+    'npm run build'
+  ]
+  if (!buildScript) {
+    buildScript = defaultBuildCommands
+  }
 
   const defaultTestCommands = [
     `cypress ci --spec "${outputFolder}/$CI_BUILD_NAME.js"`
@@ -68,10 +79,13 @@ function generateGitLabCiFile (outputFolder, specFiles, dockerImage,
 build-specs:
   stage: build
   script:
-    - echo $CI_BUILD_ID > build.id
-    - npm install --quiet
-    - npm test
-    - npm run build
+`
+  buildScript.forEach((buildCommand) => {
+    gitlabFile += `    - ${buildCommand}
+`
+  })
+
+gitlabFile += `
   artifacts:
     paths:
       - build.id
