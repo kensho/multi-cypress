@@ -85,7 +85,7 @@ build-specs:
 `
   })
 
-gitlabFile += `
+  gitlabFile += `
   artifacts:
     paths:
       - build.id
