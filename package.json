@@ -55,11 +55,10 @@
   "scripts": {
     "ban": "ban",
     "deps": "deps-ok",
-    "format": "standard-format -w src/*.js",
     "issues": "git-issues",
     "license": "license-checker --production --onlyunknown --csv",
-    "lint": "standard --verbose src/*.js",
-    "pretest": "npm run format && npm run lint",
+    "lint": "standard --verbose --fix src/*.js",
+    "pretest": "npm run lint",
     "secure": "nsp check",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "test": "npm run unit",
@@ -82,8 +81,7 @@
     "nsp": "2.4.0",
     "pre-git": "3.9.1",
     "semantic-release": "^4.3.5",
-    "standard": "7.1.2",
-    "standard-format": "2.2.1",
+    "standard": "8.6.0",
     "stop-build": "1.0.1"
   },
   "dependencies": {

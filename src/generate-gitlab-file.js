@@ -110,6 +110,7 @@ build-specs:
     expire_in: 1 month
     paths:
       - cypress/screenshots/
+      - cypress/videos/
   script:
 `
   script.forEach((testCommand) => {

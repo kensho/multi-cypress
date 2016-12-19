@@ -151,7 +151,8 @@ To print debug messages during the build, start the tool with environment variab
 DEBUG=multi ...
 ```
 
-The generated GitLab CI also collects the screenshots collected by Cypress as artifacts
+The generated GitLab CI also collects the screenshots (and videos)
+collected by Cypress as artifacts
 
 ```
 .job_template: &e2e_test_definition
@@ -160,6 +161,7 @@ The generated GitLab CI also collects the screenshots collected by Cypress as ar
     expire_in: 1 month
     paths:
     - cypress/screenshots/
+    - cypress/videos/
   script:
     - cypress ci --spec "output/$CI_BUILD_NAME.js"
 ```
