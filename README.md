@@ -158,7 +158,7 @@ collected by Cypress as artifacts
 .job_template: &e2e_test_definition
   artifacts:
     when: on_failure
-    expire_in: 1 month
+    expire_in: 1 week
     paths:
     - cypress/screenshots/
     - cypress/videos/
