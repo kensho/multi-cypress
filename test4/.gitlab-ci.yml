@@ -45,6 +45,7 @@ build-specs:
     expire_in: 1 month
     paths:
       - cypress/screenshots/
+      - cypress/videos/
   script:
     - cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json
   before_script:
