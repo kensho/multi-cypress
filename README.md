@@ -121,7 +121,7 @@ test, before and after commands, for example to specify the
     "script": [
       "cypress ci --spec cypress/integration/$CI_BUILD_NAME.js --reporter json",
       "echo test finished successfully"
-    ]
+    ],
     "before_script": [
       "mkdir -p dist || true",
       "echo Prep done"
@@ -142,6 +142,23 @@ macro expansion `${outputFolder}`. See [test4/package.json](test4/package.json) 
 You can also customize the build script commands using `build_script` list.
 See [test5/package.json](test5/package.json) and the output
 [test5/.gitlab-ci.yml](test5/.gitlab-ci.yml) files.
+
+## Support files
+
+This project does NOT copy any support files. If you have a dependency with
+custom commands for example, you need to copy it separately. For example
+
+```json
+{
+  "scripts": {
+    "build": "multi-cypress && npm run copy-commands",
+    "copy-commands": "cp node_modules/my-utils/commands.js cypress/support"
+  }
+}
+```
+
+This will copy file `commands.js` from installed dependency `my-utils` into
+Cypress support folder.
 
 ## Debugging
 
